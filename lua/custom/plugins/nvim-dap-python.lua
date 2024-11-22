@@ -1,5 +1,6 @@
 return {
   'mfussenegger/nvim-dap-python',
-  cmd = 'NvimDap',
-  opts = { 'python3' },
+  config = function()
+    require('dap-python').setup 'python3'
+  end,
 }

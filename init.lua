@@ -90,6 +90,10 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Disable Netrw (default file browser)
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -97,6 +101,13 @@ vim.g.have_nerd_font = true
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
+
+-- Auto reload files (mostly for ssh connections)
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})
 
 -- Make line numbers default
 vim.opt.number = true
@@ -109,6 +120,7 @@ vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
+vim.opt.autochdir = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -168,7 +180,11 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', ';', ':')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', '<C-w>q', { desc = '[Q]uit current [w]indow' })
+vim.keymap.set('n', '<leader>Q', ':qa!<CR>', { desc = '[Q]uit Neovim (and abort buffers)' })
+vim.keymap.set('n', '<leader>W', ':wa<CR>', { desc = 'Save all buffers' })
+vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save current buffer' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -185,14 +201,31 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Neotree mappings
+vim.keymap.set('n', '\\', ':Neotree toggle<CR>')
+
+-- Bufferline mappings
+vim.keymap.set('n', '<A-,>', ':BufferLineMovePrev<CR>')
+vim.keymap.set('n', '<A-.>', ':BufferLineMoveNext<CR>')
+vim.keymap.set('n', '<A-h>', ':BufferLineCyclePrev<CR>')
+vim.keymap.set('n', '<A-l>', ':BufferLineCycleNext<CR>')
+vim.keymap.set('n', 'gb', ':BufferLinePick<CR>', { desc = '[G]oto [B]uffer' })
+
+vim.keymap.set('n', '<A-p>', ':BufferLineTogglePin<CR>')
+
+vim.keymap.set('n', '<A-d>', ':bp|bd! #<CR>', { desc = '[D]elete current buffer' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -258,6 +291,11 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+  {
+    'NOSDuco/remote-sshfs.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = true,
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -619,7 +657,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -742,12 +780,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -757,6 +795,7 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
     },
     config = function()
       -- See `:help cmp`
@@ -851,83 +890,6 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'scottmckendry/cyberdream.nvim',
-    lazy = false,
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'cyberdream'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
-    end,
-    opts = {
-      -- Enable transparent background
-      transparent = true,
-
-      -- Enable italics comments
-      italic_comments = false,
-
-      -- Replace all fillchars with ' ' for the ultimate clean look
-      hide_fillchars = false,
-
-      -- Modern borderless telescope theme - also applies to fzf-lua
-      borderless_telescope = false,
-
-      -- Set terminal colors used in `:terminal`
-      terminal_colors = true,
-
-      -- Improve start up time by caching highlights. Generate cache with :CyberdreamBuildCache and clear with :CyberdreamClearCache
-      cache = false,
-
-      theme = {
-        variant = 'default', -- use "light" for the light variant. Also accepts "auto" to set dark or light colors based on the current value of `vim.o.background`
-        saturation = 1, -- accepts a value between 0 and 1. 0 will be fully desaturated (greyscale) and 1 will be the full color (default)
-        highlights = {
-          -- Highlight groups to override, adding new groups is also possible
-          -- See `:h highlight-groups` for a list of highlight groups or run `:hi` to see all groups and their current values
-
-          -- Example:
-          -- Comment = { fg = "#696969", bg = "NONE", italic = true },
-
-          -- Complete list can be found in `lua/cyberdream/theme.lua`
-        },
-
-        -- Override a highlight group entirely using the color palette
-        -- overrides = function(colors) -- NOTE: This function nullifies the `highlights` option
-        --     -- Example:
-        --     return {
-        --         Comment = { fg = colors.green, bg = "NONE", italic = true },
-        --         ["@property"] = { fg = colors.magenta, bold = true },
-        --     }
-        -- end,
-
-        -- Override a color entirely
-        -- colors = {
-        --     -- For a list of colors see `lua/cyberdream/colours.lua`
-        --     -- Example:
-        --     bg = "#000000",
-        --     green = "#00ff00",
-        --     magenta = "#ff00ff",
-        -- },
-      },
-
-      -- Disable or enable colorscheme extensions
-      -- extensions = {
-      --     telescope = true,
-      --     notify = true,
-      --     mini = true,
-      -- },
-    },
-  },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -952,17 +914,17 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
+      -- local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      -- statusline.section_location = function()
+      -- return '%2l:%-2v'
+      -- end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
