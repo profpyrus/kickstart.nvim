@@ -33,13 +33,25 @@ return {
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
+  init = function()
+    if vim.fn.argc(-1) == 1 then
+      local stat = vim.loop.fs_stat(vim.fn.argv(0))
+      if stat and stat.type == 'directory' then
+        require('neo-tree').setup {
+          filesystem = {
+            hijack_netrw_behavior = 'open_current',
+          },
+        }
+      end
+    end
+  end,
   opts = {
     close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
     popup_border_style = 'rounded',
     enable_git_status = true,
     enable_diagnostics = true,
     open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- when opening files, do not use windows containing these filetypes or buftypes
-    sort_case_insensitive = false, -- used when sorting files and directories in the tree
+    sort_case_insensitive = true, -- used when sorting files and directories in the tree
     sort_function = nil, -- use a custom function for sorting files and directories in the tree
     -- sort_function = function (a,b)
     --       if a.type == b.type then
@@ -150,6 +162,7 @@ return {
         ['<2-LeftMouse>'] = 'open',
         ['<cr>'] = 'open',
         ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
+        ['\\'] = 'close_window', -- close neotree if in focus and open
         ['P'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = true } },
         -- Read `# Preview Mode` for more information
         ['l'] = 'focus_preview',
@@ -229,6 +242,7 @@ return {
         --               -- the current file is changed while the tree is open.
         leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
+      bind_to_cwd = true,
       group_empty_dirs = false, -- when true, empty folders will be grouped together
       hijack_netrw_behavior = 'open_default', -- netrw disabled, opening a directory opens neo-tree
       -- in whatever position is specified in window.position
@@ -249,6 +263,7 @@ return {
           -- ["D"] = "fuzzy_sorter_directory",
           ['f'] = 'filter_on_submit',
           ['<c-x>'] = 'clear_filter',
+          ['<esc>'] = 'clear_filter',
           ['[g'] = 'prev_git_modified',
           [']g'] = 'next_git_modified',
           ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
@@ -276,7 +291,7 @@ return {
       follow_current_file = {
         enabled = true, -- This will find and focus the file in the active buffer every time
         --              -- the current file is changed while the tree is open.
-        leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
       group_empty_dirs = true, -- when true, empty folders will be grouped together
       show_unloaded = true,
