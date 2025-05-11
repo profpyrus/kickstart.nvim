@@ -182,7 +182,7 @@ vim.opt.expandtab = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Be able to press ';' instead of ':' for easier command access
-vim.keymap.set('n', ';', ':')
+-- vim.keymap.set('n', ';', ':')
 
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -625,6 +625,10 @@ require('lazy').setup({
           vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
         end
       end
+
+      vim.diagnostic.config {
+        virtual_text = true,
+      }
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
