@@ -222,10 +222,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '\\', ':Neotree toggle<CR>')
 
 -- Bufferline mappings
-vim.keymap.set('n', '<A-,>', ':BufferLineMovePrev<CR>')
-vim.keymap.set('n', '<A-.>', ':BufferLineMoveNext<CR>')
-vim.keymap.set('n', '<A-h>', ':BufferLineCyclePrev<CR>')
-vim.keymap.set('n', '<A-l>', ':BufferLineCycleNext<CR>')
+vim.keymap.set('n', '<A-h>', ':BufferLineMovePrev<CR>')
+vim.keymap.set('n', '<A-l>', ':BufferLineMoveNext<CR>')
+vim.keymap.set('n', '<A-j>', ':BufferLineCyclePrev<CR>')
+vim.keymap.set('n', '<A-k>', ':BufferLineCycleNext<CR>')
 vim.keymap.set('n', 'gb', ':BufferLinePick<CR>', { desc = '[G]oto [B]uffer' })
 
 vim.keymap.set('n', '<A-p>', ':BufferLineTogglePin<CR>')
