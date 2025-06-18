@@ -109,14 +109,6 @@ return {
         request = 'launch',
         vmArgs = '' .. '-Xmx2g ',
       },
-      {
-        name = 'Debug Launch with IP Arg(2GB)',
-        type = 'java',
-        request = 'launch',
-        mainClass = 'main.Assignment_Trace4',
-        args = '-i wlan0 ' .. '8.8.8.8',
-        vmArgs = '' .. '-Xmx2g ' .. '-Djava.library.path=/home/profpyrus/Projects/GRNVS/assignment-3-gradle/app/lib',
-      },
     }
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
