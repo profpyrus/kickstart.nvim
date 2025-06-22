@@ -71,6 +71,25 @@ return {
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
+      layouts = {
+        {
+          elements = {
+            { id = 'console', size = 1 },
+          },
+          position = 'right',
+          size = 60,
+        },
+        {
+          elements = {
+            { id = 'scopes', size = 0.50 },
+            { id = 'breakpoints', size = 0.20 },
+            { id = 'stacks', size = 0.15 },
+            { id = 'watches', size = 0.15 },
+          },
+          position = 'left',
+          size = 40,
+        },
+      },
       -- Set icons to characters that are more likely to work in every terminal.
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
