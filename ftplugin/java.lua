@@ -164,3 +164,16 @@ end
 
 -- This starts a new client & server, or attaches to an existing client & server based on the `root_dir`.
 jdtls.start_or_attach(config)
+
+-- Save the original function
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+
+-- Override it
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or 'rounded' -- default border
+  opts.max_width = opts.max_width or 80 -- or whatever you like
+  opts.max_height = opts.max_height or 20
+  opts.focusable = opts.focusable ~= false -- default focusable to true unless explicitly false
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
