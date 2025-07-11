@@ -61,8 +61,6 @@ return {
           ['bufferline.nvim'] = true,
         },
       }
-      -- vim.cmd.colorscheme 'dracula'
-      -- vim.cmd.colorscheme 'dracula-soft'
     end,
   },
   {
@@ -70,8 +68,12 @@ return {
     name = 'catppuccin',
     lazy = false,
     priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'catppuccin-mocha'
+    opts = {
+      flavour = 'mocha',
+      transparent_background = true,
+    },
+    config = function()
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 }

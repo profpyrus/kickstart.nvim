@@ -91,6 +91,14 @@ return {
           })
         end
 
+        vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_hover) then
+          map('K', function()
+            vim.lsp.buf.hover { max_width = 80 }
+          end, 'Show Description under cursor')
+        end
+
         -- The following code creates a keymap to toggle inlay hints in your
         -- code, if the language server you are using supports them
         --

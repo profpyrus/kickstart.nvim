@@ -135,6 +135,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  colorscheme = 'catppuccin-mocha',
   git = {
     url_format = 'git@github.com:%s.git',
   },
