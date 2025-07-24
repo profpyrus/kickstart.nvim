@@ -63,6 +63,20 @@ local config = {
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   settings = {
     java = {
+      import = {
+        gradle = {
+          enabled = true,
+          wrapper = {
+            enabled = true,
+            checksums = {
+              {
+                sha256 = '7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172',
+                allowed = true,
+              },
+            },
+          },
+        },
+      },
       home = '/usr/lib/jvm/default',
       eclipse = {
         downloadSources = true,
