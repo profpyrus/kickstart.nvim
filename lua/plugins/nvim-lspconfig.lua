@@ -164,7 +164,7 @@ return {
           },
         },
       },
-      pylsp = {},
+      -- pylsp = {},
     }
 
     require('mason').setup()

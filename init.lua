@@ -82,7 +82,8 @@ vim.opt.expandtab = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>Q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', ':bd<CR>', { desc = 'Close current buffer' })
 -- vim.keymap.set('n', '<leader>Q', ':qa!<CR>', { desc = '[Q]uit Neovim (and abort buffers)' })
 vim.keymap.set('n', '<leader>W', ':wa<CR>', { desc = 'Save all buffers' })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save current buffer' })
