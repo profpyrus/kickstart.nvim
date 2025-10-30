@@ -89,10 +89,10 @@ vim.keymap.set('n', '<leader>W', ':wa<CR>', { desc = 'Save all buffers' })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save current buffer' })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+-- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+-- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Neotree mappings
 vim.keymap.set('n', '\\', ':Neotree toggle<CR>')
