@@ -26,6 +26,9 @@ vim.opt.mouse = 'a'
 vim.opt.showmode = false
 vim.opt.autochdir = false
 
+-- Wrap around lines in navigation when using arrow keys
+vim.opt.whichwrap:append '<,>'
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -76,10 +79,15 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 -- KEYBINDS
+
+-- Make delete just delete and x cut
 vim.keymap.set({ 'n', 'v', 'o' }, 'd', '"_d')
 vim.keymap.set('n', 'dd', '"_dd')
 vim.keymap.set({ 'n', 'v', 'o' }, 'x', 'd')
 vim.keymap.set('n', 'xx', 'dd')
+
+-- Make c-bs work like c-w
+vim.keymap.set('i', '<c-bs>', '<c-w>')
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
