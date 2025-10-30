@@ -76,6 +76,10 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 -- KEYBINDS
+vim.keymap.set({ 'n', 'v', 'o' }, 'd', '"_d')
+vim.keymap.set('n', 'dd', '"_dd')
+vim.keymap.set({ 'n', 'v', 'o' }, 'x', 'd')
+vim.keymap.set('n', 'xx', 'dd')
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
