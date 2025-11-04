@@ -22,6 +22,16 @@ return { -- Collection of various small independent plugins/modules
     require('mini.starter').setup()
     require('mini.files').setup()
 
+    local MiniFiles = require 'mini.files'
+
+    local minifiles_toggle = function(...)
+      if not MiniFiles.close() then
+        MiniFiles.open(...)
+      end
+    end
+
+    vim.keymap.set('n', '\\', minifiles_toggle, { desc = 'Open MiniFiles' })
+
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,
     --  and try some other statusline plugin
