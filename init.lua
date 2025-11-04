@@ -107,7 +107,7 @@ vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save current buffer' })
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Neotree mappings
-vim.keymap.set('n', '\\', ':Neotree toggle<CR>')
+-- vim.keymap.set('n', '\\', ':Neotree toggle<CR>')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
