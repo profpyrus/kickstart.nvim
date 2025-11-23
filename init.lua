@@ -54,7 +54,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
--- Displays which-key popup sooner
+-- Displays key popup sooner
 vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
@@ -94,7 +94,7 @@ vim.keymap.set('i', '<c-bs>', '<c-w>')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>Q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- vim.keymap.set('n', '<leader>Q', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>q', ':bd<CR>', { desc = 'Close current buffer' })
 -- vim.keymap.set('n', '<leader>Q', ':qa!<CR>', { desc = '[Q]uit Neovim (and abort buffers)' })
 vim.keymap.set('n', '<leader>W', ':wa<CR>', { desc = 'Save all buffers' })
@@ -156,9 +156,6 @@ require('lazy').setup({
       },
     },
   },
-
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { import = 'plugins' },
 }, {
