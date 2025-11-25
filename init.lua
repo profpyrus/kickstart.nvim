@@ -48,7 +48,9 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
--- vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes'
+
+vim.opt.wrap = false
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -62,7 +64,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '» ', trail = '·', extends = '', precedes = '', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
