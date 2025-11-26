@@ -7,7 +7,7 @@ return { -- Useful plugin to show you pending keybinds.
       mappings = vim.g.have_nerd_font,
       -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
       -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
-      keys = vim.g.have_nerd_font and {} or {
+      keys = vim.g.have_nerd_font and {} or not vim.g.have_nerd_font and {
         Up = '<Up> ',
         Down = '<Down> ',
         Left = '<Left> ',
