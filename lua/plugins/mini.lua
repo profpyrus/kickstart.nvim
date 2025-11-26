@@ -22,6 +22,7 @@ return { -- Collection of various small independent plugins/modules
     require('mini.notify').setup()
     require('mini.starter').setup()
     require('mini.files').setup()
+    require('mini.pairs').setup()
 
     local MiniFiles = require 'mini.files'
 
